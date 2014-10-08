@@ -23,7 +23,7 @@ import time
 from subprocess import call
 
 # variables
-ssh_config_file = os.getenv("HOME") + '/.ssh/config2'
+ssh_config_file = os.getenv("HOME") + '/.ssh/config'
 
 # colors, control sequences
 TERM_RED     = '\033[91m'
