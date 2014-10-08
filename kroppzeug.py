@@ -181,10 +181,13 @@ while True:
     print_cmd()
 
     # input
-    n = input('')
-    ns = n.split(None, 1)
+    try:
+        n = input('')
+    except EOFError:
+        n = 'exit'
 
     # execute
+    ns = n.split(None, 1)
     if n == 'q' or n == 'e' or n == 'exit':
         os.system('clear')
         quit()
