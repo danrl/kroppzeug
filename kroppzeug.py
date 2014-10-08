@@ -20,23 +20,23 @@
 import string
 import os
 import time
+import sys
 from subprocess import call
 
-# variables
+# global variables
+hosts           = []
+error_message   = False
+whereami        = False
 ssh_config_file = os.getenv("HOME") + '/.ssh/config'
 
 # colors, control sequences
-TERM_RED     = '\033[91m'
-TERM_GREEN   = '\033[92m'
-TERM_YELLOW  = '\033[93m'
-TERM_BLUE    = '\033[94m'
-TERM_MAGENTA = '\033[95m'
-TERM_BOLD    = '\033[1m'
-TERM_RESET   = '\033[0m'
-
-# global variables
-hosts = []
-error_message = False
+TERM_RED        = '\033[91m'
+TERM_GREEN      = '\033[92m'
+TERM_YELLOW     = '\033[93m'
+TERM_BLUE       = '\033[94m'
+TERM_MAGENTA    = '\033[95m'
+TERM_BOLD       = '\033[1m'
+TERM_RESET      = '\033[0m'
 
 # catch SIGINT (e.g. ctrl+c)
 import signal
@@ -89,9 +89,14 @@ def parse_hosts(filename):
 def print_header():
     os.system('clear')
     print(TERM_BOLD + TERM_RED, end='')
-    print('┬┌─┬─┐┌─┐┌─┐┌─┐┌─┐┌─┐┬ ┬┌─┐'.center(TERM_SIZEX))
-    print('├┴┐├┬┘│ │├─┘├─┘┌─┘├┤ │ ││ ┬'.center(TERM_SIZEX))
-    print('┴ ┴┴└─└─┘┴  ┴  └─┘└─┘└─┘└─┘'.center(TERM_SIZEX))
+    if whereami == True:
+        print()
+        print(os.getenv('HOSTNAME').center(TERM_SIZEX))
+        print()
+    else:
+        print('┬┌─┬─┐┌─┐┌─┐┌─┐┌─┐┌─┐┬ ┬┌─┐'.center(TERM_SIZEX))
+        print('├┴┐├┬┘│ │├─┘├─┘┌─┘├┤ │ ││ ┬'.center(TERM_SIZEX))
+        print('┴ ┴┴└─└─┘┴  ┴  └─┘└─┘└─┘└─┘'.center(TERM_SIZEX))
     print(TERM_GREEN + '─' * TERM_SIZEX)
 
 # print a list of available hosts
@@ -164,8 +169,9 @@ def shortcut_to_id(shortcut):
             return i
     return False
 
-parse_hosts(ssh_config_file)
 
+
+parse_hosts(ssh_config_file)
 
 while True:
     # build screen
@@ -182,6 +188,11 @@ while True:
     if n == 'q' or n == 'e' or n == 'exit':
         os.system('clear')
         quit()
+    elif n == 'whereami':
+        if whereami == True:
+            whereami = False
+        else:
+            whereami = True
     elif len(ns) > 1 and ns[0] == 'update' and ns[1] == 'all':
         for i in range(len(hosts)):
             update_host(i)

@@ -44,7 +44,9 @@ Commands
 
 To connect to a server just type the coresponding [server name].
 To update a server use 'update [server name]' or 'update all' to update
-all servers.
+all servers. If you are unsure from which host you are connecting, e.g.
+because you own too many computers, type 'whereami' to toggle the hostname
+in the title area.
 
 
 Screenshot
