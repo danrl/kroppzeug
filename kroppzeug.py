@@ -20,6 +20,7 @@
 import string
 import os
 import time
+import sys
 from subprocess import call
 
 # variables
@@ -89,9 +90,12 @@ def parse_hosts(filename):
 def print_header():
     os.system('clear')
     print(TERM_BOLD + TERM_RED, end='')
-    print('┬┌─┬─┐┌─┐┌─┐┌─┐┌─┐┌─┐┬ ┬┌─┐'.center(TERM_SIZEX))
-    print('├┴┐├┬┘│ │├─┘├─┘┌─┘├┤ │ ││ ┬'.center(TERM_SIZEX))
-    print('┴ ┴┴└─└─┘┴  ┴  └─┘└─┘└─┘└─┘'.center(TERM_SIZEX))
+    if len(sys.argv) > 1 and sys.argv[1] == "-hostname":
+        print(os.getenv('HOSTNAME').center(TERM_SIZEX))
+    else:
+        print('┬┌─┬─┐┌─┐┌─┐┌─┐┌─┐┌─┐┬ ┬┌─┐'.center(TERM_SIZEX))
+        print('├┴┐├┬┘│ │├─┘├─┘┌─┘├┤ │ ││ ┬'.center(TERM_SIZEX))
+        print('┴ ┴┴└─└─┘┴  ┴  └─┘└─┘└─┘└─┘'.center(TERM_SIZEX))
     print(TERM_GREEN + '─' * TERM_SIZEX)
 
 # print a list of available hosts
