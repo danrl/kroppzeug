@@ -43,7 +43,7 @@ import signal
 import sys
 def signal_handler(signal, frame):
     print()
-    print(TERM_RESET + 'bye!')
+    print(TERM_RESET + 'Life tasted so good, dude!')
     sys.exit(0)
 signal.signal(signal.SIGINT, signal_handler)
 
@@ -69,19 +69,19 @@ def parse_hosts(filename):
             continue
         option = line[0]
         value = line[1]
-        if option == 'Host':
+        if option.lower() == 'host':
             shortcut = value
             about = 'no description'
             update = False
             autocmd = False
             i += 1
-        elif option == '#kroppzeug_description':
+        elif option.lower() == '#kroppzeug_description':
             about = value
-        elif option == '#kroppzeug_update' and len(value) > 0:
+        elif option.lower() == '#kroppzeug_update' and len(value) > 0:
             update = value
-        elif option == '#kroppzeug_autocmd':
+        elif option.lower() == '#kroppzeug_autocmd':
             autocmd = value
-        elif option == '#kroppzeug_managed' and value == 'true':
+        elif option.lower() == '#kroppzeug_managed' and value.lower() == 'true':
             hosts.append([shortcut, about, update, autocmd])
     inputfile.close()
 
