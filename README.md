@@ -22,21 +22,23 @@ Configuration
 
 Just annotate you SSH config file with comments starting with '#kroppzeug_'.
 
-* ``#kroppzeug_managed`` Set to 'true' to allow kroppzeug to list this server.
+
 * ``#kroppzeug_autocmd`` Commands to execute after the connection has been made.
 * ``#kroppzeug_description`` A description of the server. Optional.
 * ``#kroppzeug_update`` Commands to execute when using the update function. Optional.
+* ``#kroppzeug_managed`` Set to 'true' to allow kroppzeug to list this server.
 
+``#kroppzeug_managed`` must be true if a host entry should be used and it also must be the last comment for a host entry, only this ensures correct parsing of the config file and host entries.
 
 ````
 Host cloud
     Hostname                cloud.nonattached.net
     User                    user1
     Port                    2222
-    #kroppzeug_managed      true
     #kroppzeug_autocmd      tmux attach || tmux
     #kroppzeug_description  OwnCloud Server
     #kroppzeug_update       apt-get update; apt-get upgrade
+    #kroppzeug_managed      true
 ````
 
 Commands
