@@ -20,7 +20,7 @@ low-german term for ones offspring.
 Configuration
 -------------
 
-Just annotate you SSH config file with comments starting with '#kroppzeug_'.
+Just annotate your SSH config file with comments starting with '#kroppzeug_'.
 
 
 * ``#kroppzeug_autocmd`` Commands to execute after the connection has been made.
@@ -28,7 +28,7 @@ Just annotate you SSH config file with comments starting with '#kroppzeug_'.
 * ``#kroppzeug_update`` Commands to execute when using the update function. Optional.
 * ``#kroppzeug_managed`` Set to 'true' to allow kroppzeug to list this server.
 
-``#kroppzeug_managed`` must be true if a host entry should be used and it also must be the last comment for a host entry, only this ensures correct parsing of the config file and host entries.
+Note: ``#kroppzeug_managed`` must be set to 'true' to enable a host entry. Furthermore, it must be the last of the comments for that host.
 
 ````
 Host cloud
@@ -45,10 +45,11 @@ Commands
 --------
 
 To connect to a server just type the coresponding ``[server name]``.
-To update a server use ``update [server name]`` or ``update all`` to update
+To update a server use ``!update [server name]`` or ``!update-all`` to update
 all servers. If you are unsure from which host you are connecting, e.g.
-because you own too many computers, type ``whereami`` to toggle the hostname
-in the title area.
+because you own too many computers, type ``!hostname`` to toggle the hostname
+in the title area. You can always leave kroppzeug by typing ``!exit`` or using
+CTRL+C or CTRL+D.
 
 
 Screenshot
@@ -69,8 +70,7 @@ Screenshot
    workshop IPv6-Workshop
 
 ─────────────────────────────────────────────────────────────────────
-
-$
+(kroppzeug)$
 ````
 
 License
