@@ -100,7 +100,7 @@ def print_header():
 
     os.system('clear')
     print(TERM_BOLD + TERM_RED, end='')
-    if hostname == True:
+    if hostname is True:
         print(gethostname().center(termx))
     else:
         print('┬┌─┬─┐┌─┐┌─┐┌─┐┌─┐┌─┐┬ ┬┌─┐'.center(termx))
