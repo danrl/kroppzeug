@@ -2,41 +2,41 @@ Host foobar
     Hostname                foobar.example.com
     User                    root
     Port                    2020
-    #kroppzeug_description  cloud in foobar town
-    #kroppzeug_update       apt-get update; apt-get dist-upgrade; apt-get autoremove; apt-get clean
-    #kroppzeug_autocmd      tmux attach || tmux
-    #kroppzeug_managed      true
+    #kf_description         cloud in foobar town
+    #kf_update              apt-get update; apt-get dist-upgrade; apt-get autoremove; apt-get clean
+    #kf_autocmd             tmux attach || tmux
+    #kf_managed             true
 
 
 Host mathilda
     Hostname                mathilda.example.com
     User                    sshadm
-    #kroppzeug_description  cleaner server
-    #kroppzeug_managed      true
+    #kf_description         cleaner server
+    #kf_managed             true
 
 
 Host oracle
     Hostname                pills.example.com
     User                    root
-    #kroppzeug_description  red pill/blue pill server
-    #kroppzeug_autocmd      tmux attach || tmux
-    #kroppzeug_managed      true
+    #kf_description         red pill/blue pill server
+    #kf_autocmd             tmux attach || tmux
+    #kf_managed             true
 
 
 Host royal
     Hostname                pulp.example.com
     User                    root
     Port                    5000
-    #kroppzeug_description  quarter pounder with cheese
-    #kroppzeug_update       apt-get update; apt-get apt-get upgrade
-    #kroppzeug_autocmd      screen -raAd
-    #kroppzeug_managed      true
+    #kf_description         quarter pounder with cheese
+    #kf_update              apt-get update; apt-get apt-get upgrade
+    #kf_autocmd             screen -raAd
+    #kf_managed             true
 
 
 Host shadow
     Hostname                shadow.example.com
-    #kroppzeug_description  I SHOULD NOT BE HERE
-    #kroppzeug_managed      false
+    #kf_description         I SHOULD NOT BE HERE
+    #kf_managed             false
 
 
 Host cloud
@@ -44,7 +44,7 @@ Host cloud
     User                    root
     Port                    5000
     LocalForward            8080 localhost:8080
-    #kroppzeug_description  with a chance of meatballs
-    #kroppzeug_update       apt-get update; apt-get dist-upgrade; apt-get autoremove; apt-get clean
-    #kroppzeug_autocmd      tmux attach || tmux
-    #kroppzeug_managed      true
+    #kf_description         with a chance of meatballs
+    #kf_update              apt-get update; apt-get dist-upgrade; apt-get autoremove; apt-get clean
+    #kf_autocmd             tmux attach || tmux
+    #kf_managed             true

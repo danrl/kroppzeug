@@ -76,13 +76,13 @@ def parse_hosts(filename):
             update = False
             autocmd = False
             i += 1
-        elif option.lower() == '#kroppzeug_description':
+        elif option.lower() == '#kf_description':
             description = value
-        elif option.lower() == '#kroppzeug_update' and len(value) > 0:
+        elif option.lower() == '#kf_update' and len(value) > 0:
             update = value
-        elif option.lower() == '#kroppzeug_autocmd':
+        elif option.lower() == '#kf_autocmd':
             autocmd = value
-        elif option.lower() == '#kroppzeug_managed' and value.lower() == 'true':
+        elif option.lower() == '#kf_managed' and value.lower() == 'true':
             hosts.append([shortcut, description, update, autocmd])
     inputfile.close()
 
