@@ -17,18 +17,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 import string
 import os
 import time
 import signal
 import sys
 from subprocess import call
+from socket import gethostname
+
 
 # global variables
 hosts           = []
 error_message   = False
 hostname        = False
 ssh_config_file = os.getenv("HOME") + '/.ssh/config'
+
 
 # colors, control sequences
 TERM_RED        = '\033[91m'
@@ -39,19 +43,18 @@ TERM_MAGENTA    = '\033[95m'
 TERM_BOLD       = '\033[1m'
 TERM_RESET      = '\033[0m'
 
+
 # catch SIGINT (e.g. ctrl+c)
 def signal_handler(signal, frame):
     os.system('clear')
     sys.exit(0)
 signal.signal(signal.SIGINT, signal_handler)
 
+
 # get terminal size
 def get_termsize():
-    global TERM_SIZEY, TERM_SIZEX
     y, x = os.popen('stty size', 'r').read().split()
-    TERM_SIZEY = int(y)
-    TERM_SIZEX = int(x)
-    return
+    return int(x), int(y)
 
 # read ssh hosts from config file
 def parse_hosts(filename):
@@ -86,51 +89,63 @@ def parse_hosts(filename):
 
 # print horizontal line
 def print_hline():
-    print(TERM_BOLD + TERM_GREEN + '─' * TERM_SIZEX + TERM_RESET)
+    termx, termy = get_termsize()
+    print(TERM_BOLD + TERM_GREEN + '─' * termx + TERM_RESET)
+
 
 # print header
 def print_header():
+    global hostname
+    termx, termy = get_termsize()
+
     os.system('clear')
     print(TERM_BOLD + TERM_RED, end='')
     if hostname == True:
-        print()
-        print(os.getenv('HOSTNAME').center(TERM_SIZEX))
-        print()
+        print(gethostname().center(termx))
     else:
-        print('┬┌─┬─┐┌─┐┌─┐┌─┐┌─┐┌─┐┬ ┬┌─┐'.center(TERM_SIZEX))
-        print('├┴┐├┬┘│ │├─┘├─┘┌─┘├┤ │ ││ ┬'.center(TERM_SIZEX))
-        print('┴ ┴┴└─└─┘┴  ┴  └─┘└─┘└─┘└─┘'.center(TERM_SIZEX))
+        print('┬┌─┬─┐┌─┐┌─┐┌─┐┌─┐┌─┐┬ ┬┌─┐'.center(termx))
+        print('├┴┐├┬┘│ │├─┘├─┘┌─┘├┤ │ ││ ┬'.center(termx))
+        print('┴ ┴┴└─└─┘┴  ┴  └─┘└─┘└─┘└─┘'.center(termx))
     print_hline()
+
 
 # print a list of available hosts
 def print_hosts():
-    shortcut_width = 11
-    about_width = (TERM_SIZEX - 23) // 2
+    termx, termy = get_termsize()
+
+    # shortcut length
+    swidth = 16
+
+    # description length
+    dwidth = (termx - ((swidth + 3) * 2)) // 2
+
+    # print the hosts as 2 columns
     i = -1
     for host in hosts:
         i += 1
-        host_shortcut = host[0][:shortcut_width]
+        shortcut = host[0][:swidth]
         if host[1] is not False:
-            host_about = ' ' + host[1][:about_width]
+            desription = ' ' + host[1][:dwidth]
         else:
-            host_about = ' '
+            desription = ' '
         out = ''
-        out = out + TERM_BOLD + TERM_BLUE + host_shortcut.rjust(shortcut_width)
-        out = out + TERM_RESET + host_about.ljust(about_width)
+        out = out + TERM_BOLD + TERM_BLUE + shortcut.rjust(swidth)
+        out = out + TERM_RESET + desription.ljust(dwidth)
         if i % 2 == 0:
             print(out, end='')
         else:
             print(out)
 
 
-def print_cmd():
+def print_prompt():
     global error_message
+    termx, termy = get_termsize()
 
     # position
     if error_message is not False:
-        posx = str(TERM_SIZEY - 3)
+        posx = str(termy - 3)
     else:
-        posx = str(TERM_SIZEY - 2)
+        posx = str(termy - 2)
     print('\033[' + posx + ';0f')
     print_hline()
 
@@ -176,15 +191,12 @@ def shortcut_to_id(shortcut):
     return False
 
 
-
 parse_hosts(ssh_config_file)
-
 while True:
     # build screen
-    get_termsize()
     print_header()
     print_hosts()
-    print_cmd()
+    print_prompt()
 
     # input
     try:
@@ -196,33 +208,40 @@ while True:
     cmds = cmd.split(None, 1)
     if len(cmd) < 1:
         pass
-    elif cmd == '!exit':
+
+    elif cmd == '!e' or cmd == '!exit':
         os.system('clear')
         quit()
-    elif cmd == '!hostname':
+
+    elif cmd == '!h' or cmd == '!hostname':
         hostname = not hostname
-    elif cmd == '!update-all':
+
+    elif cmd == '!ua' or cmd == '!update-all':
         for i in range(len(hosts)):
             update_host(i)
             print_hline()
-    elif cmd.startswith('!update') and len(cmds) <= 1:
-        error_message = 'Oh no, missing server name!'
-    elif cmd.startswith('!update') and len(cmds) > 1:
-        i = shortcut_to_id(cmds[1])
-        if i is not False:
-            update_host(i)
-            time.sleep(3)
+
+    elif cmds[0] == '!update' or cmds[0] == '!u':
+        if len(cmds) <= 1:
+            error_message = 'Oh no, missing server name!'
         else:
-            error_message = 'Sorry, don\'t know that server name!'
+            i = shortcut_to_id(cmds[1])
+            if i is False:
+                error_message = 'Sorry, don\'t know that server name!'
+            else:
+                update_host(i)
+                time.sleep(3)
+
     elif cmd.startswith('!'):
         error_message = 'Try \'!hostname\', \'!update\', ' + \
         '\'!update-all\' or \'!exit\'...'
+
     else:
         i = shortcut_to_id(cmd)
-        if i is not False:
+        if i is False:
+            error_message = 'Sorry, don\'t know that server name!'
+        else:
             connect_host(i)
             time.sleep(1)
-        else:
-            error_message = 'Sorry, don\'t know that server name!'
 
 
