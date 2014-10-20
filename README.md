@@ -24,15 +24,15 @@ Just annotate your SSH config file with comments starting with '#kf_'.
 * ``#kf_autocmd`` Commands to execute after the connection has been made.
 * ``#kf_description`` A description of the server. Optional.
 * ``#kf_update`` Commands to execute when using the update function. Optional.
-* ``#kf_managed`` Set to 'true' to allow kroppzeug to list this server.
+* ``#kf_managed`` Set to 'true' to allow kroppzeug to list this server. It must
+be the last of the comments for that host.
 
-Note: ``#kf_managed`` must be set to 'true' to enable a host entry. Furthermore, it must be the last of the comments for that host.
 
 ````
 Host cloud
-    Hostname                cloud.nonattached.net
-    User                    user1
-    Port                    2222
+    Hostname         cloud.nonattached.net
+    User             user1
+    Port             2222
     #kf_autocmd      tmux attach || tmux
     #kf_description  OwnCloud Server
     #kf_update       apt-get update; apt-get upgrade
