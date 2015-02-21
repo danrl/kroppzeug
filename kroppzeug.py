@@ -26,7 +26,6 @@ import sys
 from subprocess import call
 from socket import gethostname
 
-
 # global variables
 hosts           = []
 error_message   = False
@@ -90,7 +89,7 @@ def parse_hosts(filename):
 # print horizontal line
 def print_hline():
     termx, termy = get_termsize()
-    print(TERM_BOLD + TERM_GREEN + '─' * termx + TERM_RESET)
+    print(TERM_BOLD + TERM_GREEN + '-' * termx + TERM_RESET)
 
 
 # print header
@@ -103,9 +102,7 @@ def print_header():
     if hostname is True:
         print(gethostname().center(termx))
     else:
-        print('┬┌─┬─┐┌─┐┌─┐┌─┐┌─┐┌─┐┬ ┬┌─┐'.center(termx))
-        print('├┴┐├┬┘│ │├─┘├─┘┌─┘├┤ │ ││ ┬'.center(termx))
-        print('┴ ┴┴└─└─┘┴  ┴  └─┘└─┘└─┘└─┘'.center(termx))
+        print('K R O P P Z E U G'.center(termx))
     print_hline()
 
 
@@ -243,5 +240,3 @@ while True:
         else:
             connect_host(i)
             time.sleep(1)
-
-
