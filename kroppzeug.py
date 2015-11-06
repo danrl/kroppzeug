@@ -99,10 +99,12 @@ def print_header():
 
     os.system('clear')
     print(TERM_BOLD + TERM_RED, end='')
+    print()
     if hostname is True:
         print(gethostname().center(termx))
     else:
         print('K R O P P Z E U G'.center(termx))
+    print()
     print_hline()
 
 
