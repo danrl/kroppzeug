@@ -11,8 +11,7 @@ Kroppzeug helps you to manage your server kindergarten by parsing your
 SSH config file and providing shortcuts for connecting to a server or
 updating one or all servers. Kroppzeug is perfect for managing a few to
 a dozent servers but may be no fun when you have to orchestrate hundreds
-or thousands of servers. It requires that you use a terminal multiplexer
-like screen or tmux after connecting to a server.
+or thousands of servers. 
 
 
 Configuration
